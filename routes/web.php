@@ -17,17 +17,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', function () {
     return view('app');
 })->where('any', '.*');
-
-
-// Folder structure:
-// resources/
-//   js/
-//     pages/
-//       Home.vue
-//       Products.vue
-//       About.vue
-//     App.vue
-//     app.js
-//     router.js
-//   views/
-//     app.blade.php

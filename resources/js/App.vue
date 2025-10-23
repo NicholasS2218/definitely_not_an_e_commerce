@@ -1,31 +1,20 @@
 <template>
   <div>
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/products">Products</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+    <Nav />
     
     <router-view></router-view>  <!-- Pages show here -->
   </div>
 </template>
 
 <script>
+    import Nav from './components/Navbar.vue';
     export default {
-    name: 'App'
+        name: 'App',
+        components: {
+            Nav,
+        }
     }
 </script>
 
 <style>
-    body {
-        background-color: black;
-    }
-    nav {
-    padding: 20px;
-    background: #f0f0f0;
-    }
-    nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    }
 </style>
