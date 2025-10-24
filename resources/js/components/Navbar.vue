@@ -1,60 +1,35 @@
 <template>
-    <nav class="navbar liquid-glass rounded mx-5 mt-2" v-outside="closeDropdown">
+    <nav class="navbar liquid-glass rounded mx-5 mt-2">
         <ul class="px-4">
-            <li class="dropdown"
-                @mouseenter="canHover && openDropdown"
-                @mouseleave="canHover && closeDropdown"
-            >
-                <a href="#" @click.prevent="toggleDropdown">
-                    Part Shop <i :class="dropdownOpen ? 'bi bi-chevron-up' : 'bi bi-chevron-down'"></i>
-                </a>
-                <ul v-if="dropdownOpen" class="dropdown-menu">
-                    <li><router-link to="/" @click="closeDropdown">Beli Produk <i class="bi bi-cart"></i></router-link></li>
-                    <li><router-link to="/cart" @click="closeDropdown">Keranjang <i class="bi bi-basket3"></i></router-link></li>
-                    <li><router-link to="/favorite" @click="closeDropdown">Favorit <i class="bi bi-heart"></i></router-link></li>
-                </ul>
+            <li><router-link to="/">Dashboard <i class="bi bi-house"></i></router-link></li>
+            <li><router-link to="/cart">Keranjang <i class="bi bi-basket3"></i></router-link></li>
+
+            <li class="search-li">
+                <div class="search-container input-group">
+                    <Vueform class="search-form d-flex">
+                        <TextElement :columns="{ container: 12, wrapper: 12, default: 12}" class="h-100"
+                            name="search" type="text" v-model="query" placeholder="Cari Sparepart"/>
+                    </Vueform>
+                    <button class="btn btn-primary " @click.prevent="search"><i class="bi bi-search"></i></button>
+                </div>
             </li>
-            <li class="spacer"></li>
-            <li><router-link to="/profile">Profile <i class="bi bi-person"></i></router-link></li>
+
+            <li><router-link to="/logout">Logout <i class="bi bi-box-arrow-right"></i></router-link></li>
         </ul>
     </nav>
 </template>
 
-<script>
-export default {
-  name: 'Navbar',
-  data() {
-    return {
-        dropdownOpen: false,
-    }
-  },
-  methods: {
-    toggleDropdown(){
-        this.dropdownOpen = !this.dropdownOpen;
-    },
-    openDropdown(){
-        this.dropdownOpen = true;
-    },
-    closeDropdown(){
-        this.dropdownOpen = false;
-    }
-  },
-  directives: {
-    outside: {
-      beforeMount(el, binding) {
-        el.clickOutsideEvent = event => {
-          if (!(el === event.target || el.contains(event.target))) {
-            binding.value();
-          }
-        };
-        document.body.addEventListener('click', el.clickOutsideEvent)
-      },
-      unmounted(el) {
-        document.body.removeEventListener('click', el.clickOutsideEvent)
-      }
-    }
-  }
+<script setup>
+import { ref } from 'vue'
+
+const query = ref('')
+
+const search = () => {
+  console.log('Searching for:', query.value)
+  // Later: send query to Laravel backend via Axios
 }
+
+defineOptions({ name: 'Navbar' })
 </script>
 
 <style scoped>
@@ -90,48 +65,47 @@ export default {
     }
 
     .liquid-glass{
-        background: rgba(255, 255, 255, 0.4); /* white with opacity */
+        background: rgba(233, 233, 255, 0.3); /* white with opacity */
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px); /* for Safari */
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
 
-    .dropdown-menu {
-        display: block;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        padding: 0.5rem 0;
-        min-width: 150px;
-        z-index: 1000;
+    /* Let the search bar expand */
+    .search-li {
+        flex: 1;
+        display: flex;
+        justify-content: center;
     }
 
-    .dropdown-menu li {
-        padding: 0;
+    /* Search container holds form + button */
+    .search-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
     }
 
-    .dropdown-menu li a {
-        display: block;
-        padding: 0.5rem 1rem;
-        color: black;
-        text-decoration: none;
+    /* Make Vueform fill available space */
+    .search-form {
+        flex: 1;
+        height: 38px;
     }
 
-    .dropdown-menu li a:hover {
-        background-color: #f0f0f0;
+    /* Force Vueform’s nested grid wrappers to use flex instead */
+    .search-form :deep(.vf-row), .search-form :deep(.vf-element), 
+    .search-form :deep(.vf-element-layout), .search-form :deep(.vf-element-layout-outer-wrapper),
+    .search-form :deep(.vf-element__inner), .search-form :deep(.vf-layout-inner-container),
+    .search-form :deep(.vf-layout-inner-wrapper), .search-form :deep(.vf-input-group),
+    .search-form :deep(.vf-control) {
+        display: flex !important;
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
     }
 
-    .arrow {
-        margin-left: 0.5rem;
-        font-size: 0.7rem;
-        transition: transform 0.3s ease;
-    }
-
-    .arrow.open {
-        transform: rotate(180deg);
+    /* Input itself stretches */
+    .search-form :deep(input) {
+        flex: 1 1 0% !important;
+        width: 100% !important;
+        min-width: 0 !important;
     }
 </style>

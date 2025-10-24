@@ -2,7 +2,9 @@
   <div>
     <Nav />
     
-    <router-view></router-view>  <!-- Pages show here -->
+    <div class="container pt-5">
+      <router-view></router-view>  <!-- Pages show here -->
+    </div>
   </div>
 </template>
 

@@ -1,0 +1,13 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Prevent direct access to certain files and folders
+<FilesMatch "^(\.env|\.env\..*|artisan|composer\.json|composer\.lock|package\.json|webpack\.mix\.js|vite\.config\.js)$">
+    Require all denied
+</FilesMatch>
+
+RedirectMatch 403 /(?:storage|vendor|node_modules|bootstrap|config|database|resources|routes|tests)(/.*)?$
+
+# Redirect all requests to the public folder
+RewriteCond %{REQUEST_URI} !^/sparepart/public/
+RewriteRule ^(.*)$ public/$1 [L]
