@@ -2,13 +2,14 @@
     <nav class="navbar liquid-glass rounded mx-5 mt-2">
         <ul class="px-4">
             <li><router-link to="/">Dashboard <i class="bi bi-house"></i></router-link></li>
+            <li><router-link to="/shop">Shop <i class="bi bi-cart"></i></router-link></li>
             <li><router-link to="/cart">Keranjang <i class="bi bi-basket3"></i></router-link></li>
 
             <li class="search-li">
                 <div class="search-container input-group">
                     <Vueform class="search-form d-flex">
-                        <TextElement :columns="{ container: 12, wrapper: 12, default: 12}" class="h-100"
-                            name="search" type="text" v-model="query" placeholder="Cari Sparepart"/>
+                        <TextElement class="h-100"
+                            name="search" type="text" v-model="query" placeholder=" Cari Sparepart"/>
                     </Vueform>
                     <button class="btn btn-primary " @click.prevent="search"><i class="bi bi-search"></i></button>
                 </div>
@@ -46,10 +47,7 @@ defineOptions({ name: 'Navbar' })
         padding: 0;
         align-items: center;
     }
-
-    li {
-    }
-
+    
     a {
         color: black;
         text-decoration: none;

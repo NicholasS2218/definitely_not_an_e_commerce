@@ -23,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tanstack/vue-table": "^8.21.3",
     "@vueform/vueform": "github:vueform/vueform",
     "bootstrap": "^5.3.8",
     "vue": "^3.5.22",
